@@ -21,6 +21,7 @@
     "electron-rebuild": "^3.2.9"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "registry-js": "^1.15.1"
   }
 }

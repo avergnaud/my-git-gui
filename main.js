@@ -1,5 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require('path');
+const executeGit = require('./git_util.js')
+
+app.disableHardwareAcceleration()
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -10,6 +13,7 @@ const createWindow = () => {
     }
   });
   ipcMain.handle('ping', () => 'pong')
+  ipcMain.on('git', (event,command) => executeGit(command))
   
   win.loadFile("index.html");
 };
