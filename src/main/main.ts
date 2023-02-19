@@ -9,12 +9,13 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { executeGit } from './git_util';
+import { homedir } from 'os';
 
 class AppUpdater {
   constructor() {
@@ -26,6 +27,13 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
+let cwd = homedir();
+
+ipcMain.on('setCWD', async (event, value) => {
+  cwd = value;
+  event.reply('setCWD', 'Current Working Directory is set');
+});
+
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
@@ -33,7 +41,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
 });
 
 ipcMain.on('git', async (event, command) => {
-  const msgTemplate = (command: string[]) => executeGit(command);
+  const msgTemplate = (command: string[]) => executeGit(command, cwd);
   const retour :string = await msgTemplate(command);
   console.log(retour);
   event.reply('git', retour);
@@ -119,6 +127,24 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
+
+  ipcMain.handle('dialog:openDirectory', async () => {
+
+    if(mainWindow === null) {
+      log.error(`mainWindow ${mainWindow}`);
+      return;
+    }
+
+    const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+      properties: ['openDirectory']
+    })
+    if (canceled) {
+      return
+    } else {
+      cwd = filePaths[0];
+      return cwd;
+    }
+  })
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line

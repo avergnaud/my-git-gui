@@ -44,7 +44,7 @@ async function findGitExe(): Promise<string | undefined> {
 /**
  * command : ['--version']
  */
-export async function executeGit(command: string[]) :Promise<string> {
+export async function executeGit(command: string[], cwd: string) :Promise<string> {
   log.info("\n" + command);
   
   const gitBashPath = await findGitExe();
@@ -56,7 +56,7 @@ export async function executeGit(command: string[]) :Promise<string> {
     log.error(`gitBashPath ${gitBashPath}`);
   }
 
-  const child = spawn(gitBashPathString, command);
+  const child = spawn(gitBashPathString, command, { cwd: cwd });
 
   let data = "";
   for await (const chunk of child.stdout) {

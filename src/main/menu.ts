@@ -19,12 +19,15 @@ export default class MenuBuilder {
   }
 
   buildMenu(): Menu {
+    /*
     if (
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'
     ) {
       this.setupDevelopmentEnvironment();
     }
+    */
+    this.setupDevelopmentEnvironment();
 
     const template =
       process.platform === 'darwin'
@@ -57,14 +60,14 @@ export default class MenuBuilder {
       label: 'Electron',
       submenu: [
         {
-          label: 'About ElectronReact',
+          label: 'About MyGitUI',
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
         {
-          label: 'Hide ElectronReact',
+          label: 'Hide MyGitUI',
           accelerator: 'Command+H',
           selector: 'hide:',
         },
@@ -183,11 +186,14 @@ export default class MenuBuilder {
       ],
     };
 
+    /*
     const subMenuView =
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'
         ? subMenuViewDev
         : subMenuViewProd;
+    */
+   const subMenuView = subMenuViewDev;
 
     return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
   }
@@ -212,10 +218,7 @@ export default class MenuBuilder {
       },
       {
         label: '&View',
-        submenu:
-          process.env.NODE_ENV === 'development' ||
-          process.env.DEBUG_PROD === 'true'
-            ? [
+        submenu: [
                 {
                   label: '&Reload',
                   accelerator: 'Ctrl+R',
@@ -237,17 +240,6 @@ export default class MenuBuilder {
                   accelerator: 'Alt+Ctrl+I',
                   click: () => {
                     this.mainWindow.webContents.toggleDevTools();
-                  },
-                },
-              ]
-            : [
-                {
-                  label: 'Toggle &Full Screen',
-                  accelerator: 'F11',
-                  click: () => {
-                    this.mainWindow.setFullScreen(
-                      !this.mainWindow.isFullScreen()
-                    );
                   },
                 },
               ],
