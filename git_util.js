@@ -1,3 +1,5 @@
+const log = require("electron-log");
+
 const registry = require("registry-js");
 const childProcess = require("child_process");
 const fsp = require("fs/promises");
@@ -9,7 +11,7 @@ const pathExists = (path) =>
     () => false
   );
 
-async function findGitBash() {
+async function findGitExe() {
   const registryPath = registry.enumerateValues(
     registry.HKEY.HKEY_LOCAL_MACHINE,
     "SOFTWARE\\GitForWindows"
@@ -29,7 +31,7 @@ async function findGitBash() {
     if (await pathExists(path)) {
       return path;
     } else {
-      log.debug(
+      log.info(
         `[Git Bash] registry entry found but does not exist at '${path}'`
       );
     }
@@ -42,46 +44,32 @@ async function findGitBash() {
  * command : ['--version']
  */
 async function executeGit(command) {
-  const gitBashPath = await findGitBash();
+  log.info("\n" + command);
+  
+  const gitBashPath = await findGitExe();
 
-  console.log(gitBashPath);
+  log.info(`gitBashPath ${gitBashPath}`);
 
   const child = childProcess.spawn(gitBashPath, command);
 
-  child.stdout.on('data', (data) => {
-    console.log(data.toString());
-  });
-  
-  child.stderr.on('data', (data) => {
-    console.error(data.toString());
-  });
-  
-  child.on('exit', (code) => {
-    console.log(`Child exited with code ${code}`);
-  });
-
-  return 'toto';
-
-  /*
   let data = "";
   for await (const chunk of child.stdout) {
-      console.log('stdout chunk: '+chunk);
-      data += chunk;
+    data += chunk;
   }
   let error = "";
   for await (const chunk of child.stderr) {
-      console.error('stderr chunk: '+chunk);
-      error += chunk;
+    error += chunk;
   }
-  const exitCode = await new Promise( (resolve, reject) => {
-      child.on('close', resolve);
+  const exitCode = await new Promise((resolve, reject) => {
+    child.on("close", resolve);
   });
 
-  if( exitCode) {
-      throw new Error( `subprocess error exit ${exitCode}, ${error}`);
+  if (exitCode) {
+    log.error(error);
+    throw new Error(`subprocess error exit ${exitCode}, ${error}`);
   }
+  log.info("\n" + data);
   return data;
-  */
 }
 
 module.exports = executeGit;

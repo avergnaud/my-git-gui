@@ -5,6 +5,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
   ping: () => ipcRenderer.invoke('ping'),
-  git: (command) => ipcRenderer.send('git', command),
+  git: (command) => ipcRenderer.invoke('git', command),
   // we can also expose variables, not just functions
 })

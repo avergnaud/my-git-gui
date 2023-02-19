@@ -1,6 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require('path');
 const executeGit = require('./git_util.js')
+const log = require('electron-log');
+
+// Optional, initialize the logger for any renderer processses
+log.initialize({ preload: true });
+
+log.info('Log from the main process');
 
 app.disableHardwareAcceleration()
 
@@ -13,7 +19,10 @@ const createWindow = () => {
     }
   });
   ipcMain.handle('ping', () => 'pong')
-  ipcMain.on('git', (event,command) => executeGit(command))
+  ipcMain.handle('git', async (event,command) => {
+    const result = await executeGit(command);
+    return result;
+  })
   
   win.loadFile("index.html");
 };

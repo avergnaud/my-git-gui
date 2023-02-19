@@ -7,3 +7,7 @@ https://github.com/electron/electron/blob/main/docs/tutorial/using-native-node-m
 npm install nodegit
 
 .\node_modules\.bin\electron-rebuild.cmd
+
+https://github.com/megahertz/electron-log
+
+%USERPROFILE%\AppData\Roaming\my-git-ui\logs
