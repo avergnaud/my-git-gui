@@ -38,3 +38,17 @@ span.textbox {
   font-size: 1.1rem;
   min-width: 250px;
 }
+
+a.cwda {
+  color: (internal value);
+  text-decoration: underline;
+  cursor: pointer;
+}
+a.cwda:visited {
+  color: (internal value);
+  text-decoration: underline;
+  cursor: pointer;
+}
+a.cwda:active {
+  color: (internal value);
+}

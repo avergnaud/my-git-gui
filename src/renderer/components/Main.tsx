@@ -25,7 +25,7 @@ export default function Main() {
         <h1>My git UI</h1>
         <div className="hello">
           <a
-            className="cwd-a"
+            className="cwda"
             onClick={changeHandler}
           >
             Current Working Directory

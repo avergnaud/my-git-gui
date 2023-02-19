@@ -1,3 +1,5 @@
+import './CommandButton.css';
+
 interface CommandButtonProps {
   command: string;
 }
@@ -21,6 +23,7 @@ export default function CommandButton(props: CommandButtonProps) {
         type="button" 
         title={`git ${props.command}`}
         onClick={sendCommandToMain}
+        className="command"
         >
         <span role="img" aria-label="books">
           ☛
