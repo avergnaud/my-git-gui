@@ -1,0 +1,9 @@
+span.textbox {
+  cursor: text;
+}
+
+span.textbox input {
+  border: 0px;
+  background-color: #fff;
+  font-size: 1.1rem;
+}

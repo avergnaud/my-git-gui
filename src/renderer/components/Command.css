@@ -1,0 +1,3 @@
+span.textbox.readonly {
+  cursor: not-allowed;
+}
