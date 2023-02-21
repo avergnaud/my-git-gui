@@ -39,7 +39,7 @@ export default function CommandButton(props: CommandButtonProps) {
         className={classes}
         >
         <span role="img" aria-label="books">
-          ☛
+          Execute
         </span>
       </button>
   );

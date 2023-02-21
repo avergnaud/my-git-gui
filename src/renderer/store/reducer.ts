@@ -5,7 +5,7 @@ export interface State {
 };
 export const initialState: State = {
     repoSelected: false,
-    currentWorkingDirectory: ''
+    currentWorkingDirectory: 'not set!'
 };
 
 /* Actions */

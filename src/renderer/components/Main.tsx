@@ -1,5 +1,5 @@
 import './Main.css';
-import icon from '../../../assets/git_white_logo.png';
+import icon from '../../../assets/logo-github.png';
 import CommandInput from './CommandInput';
 import Command from './Command';
 import { useContext } from 'react';
@@ -27,14 +27,14 @@ export default function Main() {
       <div className="Hello">
         <div>
           <img width="100" alt="icon" src={icon} />
+          <h1 className="title">My git UI</h1>
         </div>
-        <h1>My git UI</h1>
         <div>
           <a
             className="cwda"
             onClick={changeHandler}
           >
-            Current Working Directory
+            Current Working Directory:
           </a> 
         </div>
         <div>

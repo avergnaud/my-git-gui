@@ -4,12 +4,15 @@ import {
   shell,
   BrowserWindow,
   MenuItemConstructorOptions,
+  nativeTheme
 } from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
   submenu?: DarwinMenuItemConstructorOptions[] | Menu;
 }
+
+nativeTheme.themeSource = "dark";
 
 export default class MenuBuilder {
   mainWindow: BrowserWindow;
