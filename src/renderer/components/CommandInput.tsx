@@ -9,7 +9,6 @@ export default function CommandInput() {
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         event.preventDefault();
-        console.log(event.target.value);
         setCommand(event.target.value);
       };
 

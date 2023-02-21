@@ -1,5 +1,7 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Context } from 'renderer/store/context';
+import SomeCssLoader from './SomeCssLoader';
+import loadingGif from '../../../assets/loading-gif.gif';
 import './CommandButton.css';
 
 interface CommandButtonProps {
@@ -11,23 +13,28 @@ export default function CommandButton(props: CommandButtonProps) {
   /* global state */
   const {state, dispatch} = useContext(Context);
 
+  /* local state */
+  const [loading, setLoading] = useState(false);
+
   const sendCommandToMain = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if(!state.repoSelected) {
+    if(!state.repoSelected || loading) {
       return;
     }
+    setLoading(true);
     const commandString = props.command;
     const commandArray = commandString.split(' ');
     // ? laisser ici ou dans un useEffect ?
     window.electron.ipcRenderer.once('git', (command) => {
       // eslint-disable-next-line no-console
       console.log(command);
+      setLoading(false);
     });
     window.electron.ipcRenderer.sendMessage('git', commandArray);
   };
 
   let classes: string = "command";
-  if(!state.repoSelected) {
+  if(!state.repoSelected || loading) {
     classes += " notallowed";
   }
 
@@ -39,7 +46,8 @@ export default function CommandButton(props: CommandButtonProps) {
         className={classes}
         >
         <span role="img" aria-label="books">
-          Execute
+          {loading && <img width="20" alt="icon" src={loadingGif} />}
+          {!loading && 'Execute'}
         </span>
       </button>
   );

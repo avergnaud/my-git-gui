@@ -4,6 +4,8 @@
 
 button {
   background-color: white;
+  min-width: 105px;
+  min-height: 45px;
   padding: 10px 20px;
   border-radius: 10px;
   border: none;
