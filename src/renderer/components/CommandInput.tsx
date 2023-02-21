@@ -4,6 +4,7 @@ import './CommandInput.css';
 
 export default function CommandInput() {
 
+    /* local state */
     const [command, setCommand] = useState('--version');
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

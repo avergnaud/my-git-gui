@@ -2,28 +2,34 @@ import './Main.css';
 import icon from '../../../assets/git_white_logo.png';
 import CommandInput from './CommandInput';
 import Command from './Command';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { Context } from 'renderer/store/context';
+import { ActionType } from 'renderer/store/reducer';
 
 export default function Main() {
 
-  const [cwd, setCwd] = useState('');
+  /* global state */
+  const {state, dispatch} = useContext(Context);
 
   const changeHandler = (event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     window.electron.ipcRenderer.selectFolder()
       .then(result=>{
-        setCwd(result);
+        dispatch({
+          type: ActionType.SelectCWD,
+          currentWorkingDirectory: result
+        })
         console.log(result)
       });
   };
 
     return (
-      <div>
-        <div className="Hello">
+      <div className="Hello">
+        <div>
           <img width="100" alt="icon" src={icon} />
         </div>
         <h1>My git UI</h1>
-        <div className="hello">
+        <div>
           <a
             className="cwda"
             onClick={changeHandler}
@@ -31,16 +37,16 @@ export default function Main() {
             Current Working Directory
           </a> 
         </div>
-        <div className="Hello">
-          {cwd}
+        <div>
+          {state.currentWorkingDirectory}
         </div>
-        <div className="Hello">
+        <div>
           <CommandInput />
         </div>
-        <div className="Hello">
+        <div>
           <Command command="branch -a -vv" />
         </div>
-        <div className="Hello">
+        <div>
           <Command command="remote show origin" />
         </div>
       </div>

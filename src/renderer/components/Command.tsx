@@ -1,5 +1,4 @@
 import CommandButton from "./CommandButton";
-import { useState } from 'react';
 import './Command.css';
 
 interface CommandProps {

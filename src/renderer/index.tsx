@@ -1,9 +1,14 @@
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import { ContextProvider } from './store/context';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
-root.render(<App />);
+root.render(
+  <ContextProvider>
+    <App />
+  </ContextProvider>
+);
 
 // calling IPC exposed from preload script
 window.electron.ipcRenderer.once('ipc-example', (arg) => {
