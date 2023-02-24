@@ -1,4 +1,6 @@
-C:\Users\a.vergnaud\dev\MAIF\e\my-git-ui\release\build
+# Attention
+
+instable. Ne pas exécuter une commande qui retourne trop de ligne. Exemple `git log`
 
 <img src=".erb/img/erb-banner.svg" width="100%" />
 
